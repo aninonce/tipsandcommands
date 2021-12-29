@@ -1,4 +1,4 @@
-# Gradle commands
+# Git commands
 
 ### Contribution Guidelines
 
