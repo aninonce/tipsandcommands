@@ -1,0 +1,48 @@
+# core {{
+ [core]
+    editor = /usr/bin/vi
+
+#}}
+# user {{
+[user]
+    email = abc@xyz.com
+    name = abc
+
+#}}
+# color {{
+ [color]
+    branch = auto
+    diff = auto
+    status = auto
+
+ [color "branch"]
+    current = red
+    local = cyan
+    remote = green
+
+ [color "diff"]
+    meta = yellow
+    old = red bold
+    new = green bold
+    plain = white
+
+ # }}
+ # alias {{
+ [alias]
+    # change defaults {{
+    branch = branch -a
+    diff = diff --word-diff
+    grep = grep -Ii
+    # grep on filename
+    f = "!git ls-files | grep -i"
+    # }}
+    # log commands {{
+    ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%C(red)%d\\ %C(white)%s%C(cyan)\\ [%an]"
+    ll = log --pretty=format:"%C(yellow)%h%C(red)%d\\ %C(white)%s%C(cyan)\\ [A:%an,C:%cn]" --decorate --numstat
+    # }}
+    # useful commands {{
+
+    # list all aliases
+    la = "!git config -l | grep alias"
+    # }}
+ # }}
