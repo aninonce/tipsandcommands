@@ -7,7 +7,7 @@
 3. Raise pull request & merge.
 
 
-## Executing Git on command line
+## Executing git on command line
 Commands below assume that git is installed / available + accessible on target system.
 
 ## Stages of git
@@ -20,6 +20,7 @@ Working Directory:
 Staging Area/Index:
 	File that stores information about what will next be committed into the git repository 
 ```
+## How to execute & git help
 
 #### How to execute
 Options are allowed before and after task names.
@@ -200,12 +201,12 @@ git version 2.25.1
 #### Open man page for a git command
 
 ```text
-git <commandName> --help
-git branch --help  // Will open manual page for branch command
+git help <commandName>
+git help branch  // Will open manual page for branch command
 ```
 
 <details>
-  <summary>Sample output: </summary>
+  <summary>Sample output: git help branch </summary>
 
 ```text
 GIT-BRANCH(1)                                                                                                  Git Manual                                                                                                 GIT-BRANCH(1)
@@ -249,56 +250,7 @@ DESCRIPTION
 ```
 </details>
 
-<details>
-  <summary>Sample output: </summary>
-
-```text
-error: unknown switch `p'
-usage: git branch [<options>] [-r | -a] [--merged | --no-merged]
-   or: git branch [<options>] [-l] [-f] <branch-name> [<start-point>]
-   or: git branch [<options>] [-r] (-d | -D) <branch-name>...
-   or: git branch [<options>] (-m | -M) [<old-branch>] <new-branch>
-   or: git branch [<options>] (-c | -C) [<old-branch>] <new-branch>
-   or: git branch [<options>] [-r | -a] [--points-at]
-   or: git branch [<options>] [-r | -a] [--format]
-
-Generic options
-    -v, --verbose         show hash and subject, give twice for upstream branch
-    -q, --quiet           suppress informational messages
-    -t, --track           set up tracking mode (see git-pull(1))
-    -u, --set-upstream-to <upstream>
-                          change the upstream info
-    --unset-upstream      unset the upstream info
-    --color[=<when>]      use colored output
-    -r, --remotes         act on remote-tracking branches
-    --contains <commit>   print only branches that contain the commit
-    --no-contains <commit>
-                          print only branches that don't contain the commit
-    --abbrev[=<n>]        use <n> digits to display SHA-1s
-
-Specific git-branch actions:
-    -a, --all             list both remote-tracking and local branches
-    -d, --delete          delete fully merged branch
-    -D                    delete branch (even if not merged)
-    -m, --move            move/rename a branch and its reflog
-    -M                    move/rename a branch, even if target exists
-    -c, --copy            copy a branch and its reflog
-    -C                    copy a branch, even if target exists
-    -l, --list            list branch names
-    --show-current        show current branch name
-    --create-reflog       create the branch's reflog
-    --edit-description    edit the description for the branch
-    -f, --force           force creation, move/rename, deletion
-    --merged <commit>     print only branches that are merged
-    --no-merged <commit>  print only branches that are not merged
-    --column[=<style>]    list branches in columns
-    --sort <key>          field name to sort on
-    --points-at <object>  print only branches of the object
-    -i, --ignore-case     sorting and filtering are case insensitive
-    --format <format>     format to use for the output
-```
-</details>
-
+## Git Branch
 #### List all local branches in repo
 ```text
 git branch
@@ -328,10 +280,12 @@ git branch -v  // git branch --version
 
 #### List both local branches and remote tracking
 ```text
-git branch -a  // git branch --all
+git branch -a  // git branch --all ; will show all branches local and remote
+git branch -r  // list remote branches
+git branch -av  // list all branches with remote repos
 ```
 <details>
-    <summary>Sample output: </summary>
+    <summary>Sample output: git branch -a </summary>
 
 ```text
 * master
@@ -350,16 +304,50 @@ git branch -a  // git branch --all
 
 </details>
 
+<details>
+    <summary>Sample output: git branch -r </summary>
+
+```text
+  remotes/origin/1.4.x
+  remotes/origin/1.5.x
+  remotes/origin/2.0.x
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/contributing
+  remotes/origin/disable_tests
+  remotes/origin/gh-pages
+  remotes/origin/master
+  remotes/origin/publish_via_travis
+  remotes/origin/qiangdavidliu-update-hystrix-status
+  remotes/origin/travis-ci-com
+```
+
+</details>
+
+<details>
+    <summary>Sample output: git branch -av </summary>
+
+```text
+* master                                             3cb21589 Merge pull request #1904 from Netflix/qiangdavidliu-update-hystrix-status
+  remotes/origin/1.4.x                               00bed20c Merge pull request #1527 from Psynbiotik/patch-1
+  remotes/origin/1.5.x                               809104c8 Merge pull request #1901 from Netflix/publish_via_travis
+```
+
+</details>
+
 #### Create a new branch
 ```text
-git branch [branchName]
+git branch <branchName>
 git branch mybranch  // e.g.
+git branch <branchName> <tagName>  // create branch from a tag
+git branch <branchName> <commitSHA>  // create branch from a commitSHA. Get commitSHA from command 'git log' or 'git log --oneline'
+git push origin <branchName>  // will push the branch to remote
 ```
 
 ### Delete a branch
 ```text
-git branch -d [branchName]  // use -f option to force delete branch (in case branch has staging changes; make sure to double check / save / merge changes before deleting a branch)
+git branch -d <branchName>  // use -f option to force delete branch (in case branch has staging changes; make sure to double check / save / merge changes before deleting a branch)
 git branch -d mybranch  // e.g.
+git push origin -d <remoteBranchName> // will delete the remote branch
 ```
 
 <details>
@@ -373,12 +361,15 @@ Deleted branch mybranch (was 3cb21589).
 
 #### Switching to new branch
 ```text
-git checkout [branchName]  // you might need to stash / commit / discard changes in current branch before switching to new branch
+git checkout <branchName>  // you might need to stash / commit / discard changes in current branch before switching to new branch
 git checkout mybranch  // e.g.
+git checkout -b mybranch  // will create branch 'mybranch' and checkout i.e. switch to branch. -b stands for branch
+git checkout -b mybranch <tagName> // create branch 'mybranch' from tag <tagName>
+git branch <branchName> <commitSHA>  // create branch from a commitSHA. Get commitSHA from command 'git log' or 'git log --oneline'
 ```
 
 <details>
-    <summary>Sample output: </summary>
+    <summary>Sample output: git checkout mybranch</summary>
 
 ```text
 M       hystrix-serialization/src/main/java/com/netflix/hystrix/serial/SerialHystrixMetric.java
@@ -395,12 +386,65 @@ subsequent use of : 'git branch' command will show the branch as current branch 
 
 </details>
 
+## Tags
+Tags are used as reference point in development.
+#### Show all tags
+```text
+git tag
+git tag -n  // Show tag messages as well
+```
+
+<details>
+    <summary>Sample output: git tag</summary>
+
+```text
+1.0.4
+1.1.0
+1.1.1
+```
+
+</details>
+
+<details>
+    <summary>Sample output: git tag -n </summary>
+
+```text
+v1.5.11         Release of 1.5.11
+v1.5.12         Release of 1.5.12
+```
+
+</details>
+
+#### Create, delete, push to repo tag
+```text
+git tag -a <tagName> -m "<message>"
+git tag -a <tagName> <commitSHA> -m "<message>" // create a tag for specific commit. commitSHA can be obtained from 'git log --oneline' command.
+git tag -d <tagName>  // will delete tag. Use -f for force delete
+git push origin <tagName>  // will push tag to remote
+```
+
+<details>
+    <summary>Sample output: git tag -d mytag</summary>
+
+```text
+Deleted tag 'mytag' (was d141f747)
+```
+
+</details>
+
+## Git log
+Git log is record of commits as referenced from refs e.g. head, remote branch, tag
+where as git reflog is record of all commits that were referenced in repo.
+Git reflog is useful to get hash of commit (as long as commit is there in remote) in case of accidental damage to your repo.
+Git reflog is purely local. If is not inluced in any push / fetch.
+By default git reflog is maintained for 90 days.
 #### Show commit logs
 Most of the options for git log and git shortlog are same.
 Below is list of few commands. For complete list of commands and usage check man page: git log --help.
 ```text
 git log
 git log | grep -i "show"  // Grep for specific word / expression
+git grep -i "show"  // Though normal grep can be used with pipe with any git command, it is better to use directly git grep command as it allow searching for expression in files in work tree. Usual grep options can be used. check 'git help grep' for git manual on grep
 git log | grep -E "^commit"  // Show just the commit line; any grep expression can be used
 git log --author=<name or email>  // Show git commits by an author
 git log --skip=<number>  // Skip number commits before starting to show the commit output.
@@ -408,6 +452,9 @@ git log --reverse // Git commit log from beginging to end
 git log --oneline // Git log in one line
 git log --since=<date>, --after=<date> // Show commits more recent than a specific date.
 git log --until=<date>, --before=<date> // Show commits older than a specific date.
+git log --stat  // Get a diffstat i.e. what files where changed and how many lines changed in a 
+commit.
+git reflog
 E.g
 git log --author "David Liu" --after "11/19/2018"
 git log --author "David Liu" --after "Nov 19 2018"
@@ -482,7 +529,33 @@ Date:   Tue Apr 24 11:00:27 2018 -0700
 </details>
 
 <details>
-    <summary> git log --author "David Liu" --after "11/19/2018" </summary>
+    <summary>Sample output: git log --stat </summary>
+
+```text
+commit 1fd939b83caa7823d78476369955177313155c59
+Author: Christoph Seibert <christoph.seibert@rewe-digital.com>
+Date:   Wed Apr 4 19:21:59 2018 +0200
+
+    Reduced number of concurrent connections because there is a limit depending on the number of available cores times 2 in Grizzly's NetworkListener
+
+ hystrix-contrib/hystrix-metrics-event-stream-jaxrs/src/test/java/com/netflix/hystrix/contrib/metrics/controller/HystricsMetricsControllerTest.java | 6 +++---
+ hystrix-contrib/hystrix-metrics-event-stream-jaxrs/src/test/resources/test.properties                                                              | 3 ++-
+```
+
+</details>
+
+<details>
+    <summary>Sample output: git reflog </summary>
+
+```text
+3cb21589 (HEAD -> master, origin/master, origin/HEAD) HEAD@{0}: checkout: moving from mybranch to master
+3cb21589 (HEAD -> master, origin/master, origin/HEAD) HEAD@{1}: checkout: moving from master to mybranch
+```
+
+</details>
+
+<details>
+    <summary>Sample output: git log --author "David Liu" --after "11/19/2018" </summary>
 
 ```text
 Author: David Liu <qiang.david.liu@gmail.com>
@@ -616,3 +689,74 @@ origin  https://github.com/Netflix/Hystrix.git (push)
 ```
 
 </details>
+
+#### Git Cherrypick
+Pick a commit (or commits) from a branch and applying it to another.
+```text
+1. git cherry-pick <list of commitSHA>  // Will apply list of commitSHA given to current branch. If the commit it already present in current branch it will be duplicated. User git rebase command to fix commits. Once commit (/ commits) are applied in current branch, they can be pushed by using git push command.
+
+Use command 'git cherry-pick -e <list of commitSHA>'  // To modify commit message
+
+E.g. 
+
+Git branch state before cherry pick
+
+a - b - c  master
+    \
+     d - e  feature
+
+First make sure you are on branch where you want to add the cherry picked up commit
+
+git checkout master
+
+then do cherry picking of commit
+
+git cherry-pick e
+
+a - b - c - e  master
+    \
+    d - e  feature
+```
+
+## Remove, squash, rebase commits
+Squash - Merge multiple commits into single commit.
+```text
+1. git revert --strategy resolve <commitSHA>  // revert a specific commit. After reverting commit changes needs to be pushed using 'git push -f origin <branchName>' -f for using force option if push shows nothing to push.
+2. Commits can be reverted using rebase as well.
+git rebase -i HEAD~n  // n is number of commits. This will open an interactive window, 
+where commits will be listed. Use respective commands in front of each commit for intended
+action e.g. pick, squash, drop etc. Descritpion of each comamnd will be in the interactive 
+rebase. Make change and save the rebase. Use command 'git push -f origin <branchName>' to push change to remote.
+git rebase --abort  // If a mistake is made with rebase
+```
+
+## Git merge
+Merge sequence of commits from one branch into another branch.
+```text
+E.g.
+
+Before merge
+
+      Branch A tip  
+        |
+a - b - c
+|\
+| d - e - f  
+|         |
+Base  Branch B tip 
+
+After merge
+
+Before merge
+
+      Branch A tip  
+        |
+a - b - c -  g
+|\         / |
+| d - e - f  Merge commit
+|         |
+Base  Branch B tip
+
+1. Check out the branch which you want to merge your code into
+2. Use command 'git merge <branchName>'  // branchName - merge changes from this branch to current branch. This will create new commit in current branch. Then the new commit can be pushed with push command.
+```
