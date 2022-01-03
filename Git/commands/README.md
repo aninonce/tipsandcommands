@@ -1,16 +1,49 @@
 # Git commands
 
-### Contribution Guidelines
+<a id="toc"></a>
+## Table of contents
+
+1. [Contribution guidelines](#contri_guidelines)
+1. [Executing git on command line](#exec_cmd)
+1. [Git directories](#git_direc)
+1. [How to execute](#how_to_exec)
+1. [Git help](#git_help)
+1. [Auto completion](#auto_comp)
+1. [Git version](#git_vesion)
+1. [Git manual for a command](#git_man)
+1. [Git branch & repo](#git_branch_&_repo)
+    1. [List all local branches in repo](#git_local_branches)
+    1. [List all remote repositories](#git_remote_repo)
+    1. [Show hash, subject and remote repos of local branches](#git_local_branch_info)
+    1. [Create a new branch](#git_branch_create)
+    1. [Delete a branch](#git_branch_delete)
+    1. [Switching to a branch](#git_branch_switch)
+1. [Git tags](#git_tag)
+    1. [Show all tags](#git_tag_all)
+    1. [Create, delete push to repo tag](#git_tag_crud)
+1. [Git log](#git_log)
+    1. [Show commit logs](#git_log_show_commit)
+    1. [Summarize git log](#git_log_summary)
+1. [Working with git commits](#git_working_with_commit)
+    1. [Git cherrypick](#git_cherrypick)
+    1. [Remove, squash, rebase commits](#git_commit_crud)
+    1. [Git merge](#git_merge)
+
+
+<a id="contri_guidelines"></a>
+### Contribution guidelines [^](#toc)
 
 1. Fork -> Clone the project.
 2. Make change.
 3. Raise pull request & merge.
 
-
-## Executing git on command line
+<a id="exec_cmd"></a>
+## Executing git on command line  [^](#toc)
 Commands below assume that git is installed / available + accessible on target system.
 
-## Stages of git
+<a id="git_direc"></a>
+## Git directories [^](#toc)
+
 
 ```text
 Git Directory:
@@ -20,16 +53,17 @@ Working Directory:
 Staging Area/Index:
 	File that stores information about what will next be committed into the git repository 
 ```
-## How to execute & git help
 
-#### How to execute
+<a id="how_to_exec"></a>
+## How to execute [^](#toc)
 Options are allowed before and after task names.
 ```text
 git [commandName...] [-option-name...]
 git remote -v  // e.g.
 ```
 
-#### Git help
+<a id="git_help"></a>
+## Git help [^](#toc)
 
 ```text
 git help // is same as git --help
@@ -150,7 +184,8 @@ Ancillary Commands / Manipulators
 
 </details>
 
-#### Auto completion of git command
+<a id="auto_comp"></a>
+## Auto completion of git command [^](#toc)
 Git support auto completion for commands and options. While writing a command / option tap TAB key once / twice.
 Auto completion of relevant option will work with the righ command
 E.g.
@@ -184,7 +219,9 @@ bisect   blame    branch   bundle
 ```
 </details>
 
-#### Check git version
+
+<a id="git_version"></a>
+## Git version [^](#toc)
 
 ```text
 git --version
@@ -198,7 +235,8 @@ git version 2.25.1
 
 </details>
 
-#### Open man page for a git command
+<a id="git_man"></a>
+## Git manual for a command [^](#toc)
 
 ```text
 git help <commandName>
@@ -250,8 +288,11 @@ DESCRIPTION
 ```
 </details>
 
-## Git Branch
-#### List all local branches in repo
+<a id="git_branch_&_repo"></a>
+## Git branch & repo [^](#toc)
+
+<a id="git_local_branches"></a>
+### List all local branches in repo [^](#toc)
 ```text
 git branch
 ```
@@ -264,7 +305,24 @@ git branch
 ```
 </details>
 
-#### Show hash, subject and remote repos of local branches
+<a id="git_remote_repo"></a>
+### List all remote repositories [^](#toc)
+```text
+git remote -v
+```
+
+<details>
+    <summary>Sample output: </summary>
+
+```text
+origin  https://github.com/Netflix/Hystrix.git (fetch)
+origin  https://github.com/Netflix/Hystrix.git (push)
+```
+
+</details>
+
+<a id="git_local_branch_info"></a>
+### Show hash, subject and remote repos of local branches [^](#toc)
 
 ```text
 git branch -v  // git branch --version
@@ -278,7 +336,8 @@ git branch -v  // git branch --version
 ```
 </details>
 
-#### List both local branches and remote tracking
+<a id="git_branch_info"></a>
+### List both local branches and remote tracking [^](#toc)
 ```text
 git branch -a  // git branch --all ; will show all branches local and remote
 git branch -r  // list remote branches
@@ -334,7 +393,8 @@ git branch -av  // list all branches with remote repos
 
 </details>
 
-#### Create a new branch
+<a id="git_branch_create"></a>
+### Create a new branch [^](#toc)
 ```text
 git branch <branchName>
 git branch mybranch  // e.g.
@@ -343,7 +403,8 @@ git branch <branchName> <commitSHA>  // create branch from a commitSHA. Get comm
 git push origin <branchName>  // will push the branch to remote
 ```
 
-### Delete a branch
+<a id="git_branch_delete"></a>
+### Delete a branch [^](#toc)
 ```text
 git branch -d <branchName>  // use -f option to force delete branch (in case branch has staging changes; make sure to double check / save / merge changes before deleting a branch)
 git branch -d mybranch  // e.g.
@@ -359,7 +420,8 @@ Deleted branch mybranch (was 3cb21589).
 
 </details>
 
-#### Switching to new branch
+<a id="git_branch_switch"></a>
+### Switching to a branch [^](#toc)
 ```text
 git checkout <branchName>  // you might need to stash / commit / discard changes in current branch before switching to new branch
 git checkout mybranch  // e.g.
@@ -386,9 +448,12 @@ subsequent use of : 'git branch' command will show the branch as current branch 
 
 </details>
 
-## Tags
+<a id="git_tag"></a>
+## Git tags [^](#toc)
 Tags are used as reference point in development.
-#### Show all tags
+
+<a id="git_tag_all"></a>
+### Show all tags [^](#toc)
 ```text
 git tag
 git tag -n  // Show tag messages as well
@@ -415,7 +480,8 @@ v1.5.12         Release of 1.5.12
 
 </details>
 
-#### Create, delete, push to repo tag
+<a id="git_tag_crud"></a>
+### Create, delete, push to repo tag [^](#toc)
 ```text
 git tag -a <tagName> -m "<message>"
 git tag -a <tagName> <commitSHA> -m "<message>" // create a tag for specific commit. commitSHA can be obtained from 'git log --oneline' command.
@@ -432,13 +498,17 @@ Deleted tag 'mytag' (was d141f747)
 
 </details>
 
-## Git log
+<a id="git_log"></a>
+## Git log [^](#toc)
 Git log is record of commits as referenced from refs e.g. head, remote branch, tag
 where as git reflog is record of all commits that were referenced in repo.
 Git reflog is useful to get hash of commit (as long as commit is there in remote) in case of accidental damage to your repo.
 Git reflog is purely local. If is not inluced in any push / fetch.
 By default git reflog is maintained for 90 days.
-#### Show commit logs
+
+
+<a id="git_log_show_commit"></a>
+### Show commit logs [^](#toc)
 Most of the options for git log and git shortlog are same.
 Below is list of few commands. For complete list of commands and usage check man page: git log --help.
 ```text
@@ -572,7 +642,8 @@ Date:   Mon Nov 19 14:18:19 2018 -0800
 
 </details>
 
-#### Summarize git log
+<a id="git_log_summary"></a>
+### Summarize git log [^](#toc)
 Most of the options for git shortlog is same as git log.
 Below is list of few commands. For complete list of commands and usage check man page: git shortlog --help.
 ```text
@@ -675,22 +746,11 @@ David Liu (8):
 
 </details>
 
-#### List all remote repositories
-```text
-git remote -v
-```
+<a id="git_working_with_commit"></a>
+## Working with git commits [^](#toc)
 
-<details>
-    <summary>Sample output: </summary>
-
-```text
-origin  https://github.com/Netflix/Hystrix.git (fetch)
-origin  https://github.com/Netflix/Hystrix.git (push)
-```
-
-</details>
-
-#### Git Cherrypick
+<a id="git_cherrypick"></a>
+### Git cherrypick [^](#toc)
 Pick a commit (or commits) from a branch and applying it to another.
 ```text
 1. git cherry-pick <list of commitSHA>  // Will apply list of commitSHA given to current branch. If the commit it already present in current branch it will be duplicated. User git rebase command to fix commits. Once commit (/ commits) are applied in current branch, they can be pushed by using git push command.
@@ -718,7 +778,8 @@ a - b - c - e  master
     d - e  feature
 ```
 
-## Remove, squash, rebase commits
+<a id="git_commit_crud"></a>
+### Remove, squash, rebase commits [^](#toc)
 Squash - Merge multiple commits into single commit.
 ```text
 1. git revert --strategy resolve <commitSHA>  // revert a specific commit. After reverting commit changes needs to be pushed using 'git push -f origin <branchName>' -f for using force option if push shows nothing to push.
@@ -730,7 +791,8 @@ rebase. Make change and save the rebase. Use command 'git push -f origin <branch
 git rebase --abort  // If a mistake is made with rebase
 ```
 
-## Git merge
+<a id="git_merge"></a>
+### Git merge [^](#toc)
 Merge sequence of commits from one branch into another branch.
 ```text
 E.g.
