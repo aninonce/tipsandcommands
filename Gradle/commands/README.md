@@ -1,13 +1,47 @@
 # Gradle commands
 
-### Contribution Guidelines
+<a id="toc"></a>
+## Table of contents
+
+1. [Contribution guidelines](#contri_guidelines)
+1. [Executing gradle commands via command line](#exec_cmd)
+    1. [How to execute](#how_to)
+1. [Gradle help](#help)
+1. [Check gradle version](#check_version)
+1. [List all sub-projects in hierarichal format](#list_projects)
+1. [Gradle tasks](#tasks)
+    1. [List main tasks for the project](#list_main_tasks)
+    1. [List all tasks for the project](#list_all_tasks)
+    1. [Execute task / tasks](#execute_task)
+    1. [Forcing a task to execute](#task_force)
+    1. [Skipping a task](#task_skip)
+    1. [How to display list of tasks without actually executing the Gradle command (dry-run)](#task_dry-run)
+    1. [Continue task execution after a task failure](#task_continue)
+    1. [High level gradle tasks performance report](#task_performance)
+    1. [List task dependencies in gradle](#list_task_dependencies)
+1. [Gradle dependencies](#dependencies)
+    1. [Gradle dependency graph](#dependency_graph)
+    1. [Gradle dependency insight](#dependency_insight)
+1. [How to add gradle to an existing java project](#project_add_gradle)
+1. [How to add gradle wrapper (/ upgrade version of gradle wrapper) to a gradle project](#project_add_gradle_wrapper)
+1. [Gradle daemon](#gradle_daemon)
+    1. [Status of gradle daemons](#gradle_daemon_status)
+    1. [Stop gradle daemon](#gradle_daemon_stop)
+    1. [Do not use Gradle daemon](#gradle_daemon_no)
+1. [Gradle user home](#user_home)
+1. [Gradle offline mode](#offline_mode)
+1. [Build projects in parallel](#parallel_mode)
+
+
+<a id="contri_guidelines"> </a>
+### Contribution guidelines [^](#toc)
 
 1. Fork -> Clone the project.
 2. Make change.
 3. Raise pull request & merge.
 
-
-## Executing Gradle on command line
+<a id="exec_cmd"> </a>
+## Executing gradle commands via command line [^](#toc)
 Commands below assume that gradle is installed / available + accessible on target system.
 Commands below can executed as is with gradle wrapper i.e. gradlew (unix) / gradlw.bat (windows) if gradle wrapper is installed for the project. Go to the root of the project / folder where build.gradle exist to execute commands.
 
@@ -15,8 +49,8 @@ Though commands below are tested on Gradle verison: 6.X, 7.X
 these are expected to run on most of the gradle versions.
 If a command is not longer in use / is changed, make change and raise pull request.
 
-
-#### How to execute
+<a id="how_to"> </a>
+### How to execute [^](#toc)
 Options are allowed before and after task names.
 ```text
 gradle [taskName...] [--option-name...]
@@ -25,14 +59,16 @@ gradle clean build --profile  // e.g.
 gradlew.bat clean build --profile  // gradle wrapper on windows
 ```
 
-#### Gradle help
+<a id="help"> </a>
+## Gradle help [^](#toc)
 
 ```text
 gradle -h
 gradle -help
 ```
 
-#### Check gradle version
+<a id="check_version"> </a>
+## Check gradle version [^](#toc)
 
 ```text
 gradle -v
@@ -58,7 +94,8 @@ OS:           Linux 5.10.60.1-microsoft-standard-WSL2 amd64
 ```
 </details>
 
-#### List all sub-projects in hierarichal format
+<a id="list_projects"> </a>
+## List all sub-projects in hierarichal format [^](#toc)
 
 ```text
 gradle projects
@@ -76,7 +113,11 @@ Root project 'demo'
 ```
 </details>
 
-#### List main tasks for the project
+<a id="tasks"> </a>
+## Gradle tasks [^](#toc)
+
+<a id="list_main_tasks"> </a>
+### List main tasks for the project [^](#toc)
 This comand will give you list of main tasks. For list of all tasks check next command.
 ```text
 gradle tasks
@@ -138,7 +179,8 @@ test - Runs the test suite.
 ```
 </details>
 
-#### List all tasks for the project
+<a id="list_all_tasks"> </a>
+### List all tasks for the project [^](#toc)
 
 ```text
 gradle tasks --all
@@ -211,7 +253,8 @@ processTestResources - Processes test resources.
 ```
 </details>
 
-#### Sample task command
+<a id="execute_task"> </a>
+### Execute task / tasks [^](#toc)
 ```text
 gradle clean build  // In a multi build project, if this command is executed on root folder it will run tasks for all sub projects
 gradle <subproject>:<taskName>  // Run task for a given sub project. If executed from sub project only gradle <taskName> is required.
@@ -228,13 +271,15 @@ BUILD SUCCESSFUL in 36s
 
 </details>
 
-#### Forcing a task to execute
+<a id="task_force"> </a>
+### Forcing a task to execute [^](#toc)
 By default gradle does not rerun a task if already executed and gradle could not detect any changes in source / dependency / clean command is used. To force gradle to rerun command use following.
 ```text
 gradle test --rerun-tasks
 ```
 
-#### Skipping a task
+<a id="task_skip"> </a>
+### Skipping a task [^](#toc)
 
 Use -x before a task to skip it.
 
@@ -254,24 +299,8 @@ BUILD SUCCESSFUL in 20s
 
 </details>
 
-#### List task dependencies in Gradle
-A gradle task e.g. build could have dependencies e.g. assemble, check, test etc. 
-How to get task dependencies in Gradle.
-Check [here](https://stackoverflow.com/questions/10422054/is-there-a-way-to-list-task-dependencies-in-gradle).
-
-<details>
-    <summary>Sample output: </summary>
-
-```text
-Starting a Gradle Daemon (subsequent builds will be faster)
-
-BUILD SUCCESSFUL in 20s
-6 actionable tasks: 6 executed
-```
-
-</details>
-
-#### How to display list of tasks without actually executing the Gradle command
+<a id="task_dry-run"> </a>
+### How to display list of tasks without actually executing the Gradle command (dry-run) [^](#toc)
 ```text
 gradle [tasks...]  [--options...] --dry-run
 gradle build --dry-run
@@ -298,68 +327,57 @@ gradle build --dry-run
 
 </details>
 
-#### How to add gradle to an existing java project
+<a id="task_continue"> </a>
+### Continue task execution after a task failure [^](#toc)
 
-Go to root directory.
 ```text
-gradle init
+gradle --continue
 ```
-All necessary gradle files / folder e.g. build.gradle, settings.gradle, gradlew , gradle folder etc. will be created.
+<a id="task_performance"> </a>
+### High level gradle tasks performance report [^](#toc)
+ Profile build execution time and generates a report in the build_dir/reports/profile directory
+```text
+gradle --profile
+gradle <list of tasks> --profile  // gradle clean build --profile
+```
+
+<details>
+  <summary>Sample output: Profile </summary>
+
+  ![](./images/profile_help.JPG)
+
+</details>
+
+<details>
+  <summary>Sample output: Profile Clean Build</summary>
+
+  ![](./images/profile_clean_build.JPG)
+
+</details>
+
+<a id="list_task_dependencies"> </a>
+### List task dependencies in gradle [^](#toc)
+A gradle task e.g. build could have dependencies e.g. assemble, check, test etc. 
+How to get task dependencies in Gradle.
+Check [here](https://stackoverflow.com/questions/10422054/is-there-a-way-to-list-task-dependencies-in-gradle).
+
 <details>
     <summary>Sample output: </summary>
 
 ```text
-Select type of project to generate:
-  1: basic
-  2: application
-  3: library
-  4: Gradle plugin
-Enter selection (default: basic) [1..4]
+Starting a Gradle Daemon (subsequent builds will be faster)
 
-
-Select build script DSL:
-  1: Groovy
-  2: Kotlin
-Enter selection (default: Groovy) [1..2]
-
-Project name (default: myproject):
-
-> Task :init
-
-BUILD SUCCESSFUL in 40s
-2 actionable tasks: 2 executed
+BUILD SUCCESSFUL in 20s
+6 actionable tasks: 6 executed
 ```
 
 </details>
 
-#### How to add gradle wrapper (/ upgrade version of gradle wrapper) to a gradle project
+<a id="dependencies"> </a>
+## Gradle dependencies [^](#toc)
 
-Go to root directory of project.
-If the gradle wrapper is already installed, command below will change the gradle wrapper version to the version specified in command.
-```text
-gradle wrapper --gradle-version <gradle_version>
-gradle wrapper --gradle-version 7.3.2  // e.g.
-```
-
-<details>
-    <summary>Files added to project: </summary>
-
-```text
-└── <project folder>
-    └── gradlew
-    └── gradlew.bat
-    └── build.gradle
-    └── 
-    └── 
-    └── gradle
-        └── wrapper
-            └── gradle-wrapper.jar
-            └── gradle-wrapper.properties
-```
-
-</details>
-
-#### Gradle dependency graph
+<a id="dependency_graph"> </a>
+### Gradle dependency graph [^](#toc)
 
 Go to project root folder having build.gradle file. Use following command.
 ```text
@@ -431,7 +449,8 @@ compileClasspath - Compile classpath for source set 'main'.
 ```
 </details>
 
-#### Gradle dependency insight
+<a id="dependency_insight"> </a>
+### Gradle dependency insight [^](#toc)
 
 Insight of a particular dependency or dependencies
 ```text
@@ -535,7 +554,74 @@ org.springframework:spring-core:5.3.14
 ```
 </details>
 
-#### Status of gradle daemons
+<a id="project_add_gradle"> </a>
+## How to add gradle to an existing java project [^](#toc)
+
+Go to root directory.
+```text
+gradle init
+```
+All necessary gradle files / folder e.g. build.gradle, settings.gradle, gradlew , gradle folder etc. will be created.
+<details>
+    <summary>Sample output: </summary>
+
+```text
+Select type of project to generate:
+  1: basic
+  2: application
+  3: library
+  4: Gradle plugin
+Enter selection (default: basic) [1..4]
+
+
+Select build script DSL:
+  1: Groovy
+  2: Kotlin
+Enter selection (default: Groovy) [1..2]
+
+Project name (default: myproject):
+
+> Task :init
+
+BUILD SUCCESSFUL in 40s
+2 actionable tasks: 2 executed
+```
+
+</details>
+
+<a id="project_add_gradle_wrapper"> </a>
+## How to add gradle wrapper (/ upgrade version of gradle wrapper) to a gradle project [^](#toc)
+
+Go to root directory of project.
+If the gradle wrapper is already installed, command below will change the gradle wrapper version to the version specified in command.
+```text
+gradle wrapper --gradle-version <gradle_version>
+gradle wrapper --gradle-version 7.3.2  // e.g.
+```
+
+<details>
+    <summary>Files added to project: </summary>
+
+```text
+└── <project folder>
+    └── gradlew
+    └── gradlew.bat
+    └── build.gradle
+    └── 
+    └── 
+    └── gradle
+        └── wrapper
+            └── gradle-wrapper.jar
+            └── gradle-wrapper.properties
+```
+
+</details>
+
+<a id="gradle_daemon"> </a>
+## Gradle daemon [^](#toc)
+
+<a id="gradle_daemon_status"> </a>
+### Status of gradle daemons [^](#toc)
 
 ```text
 gradle --status
@@ -550,7 +636,8 @@ PID STATUS   INFO
 ```
 </details>
 
-#### Stop gradle daemon
+<a id="gradle_daemon_stop"> </a>
+### Stop gradle daemon [^](#toc)
 
 Stops a gradle daemon if running
 ```text
@@ -566,55 +653,30 @@ Stopping Daemon(s)
 ```
 </details>
 
-#### High level gradle tasks performance report
- Profile build execution time and generates a report in the build_dir/reports/profile directory
+<a id="gradle_daemon_no"> </a>
+### Do not use Gradle daemon [^](#toc)
+
 ```text
-gradle --profile
-gradle <list of tasks> --profile  // gradle clean build --profile
+gradle --no-daemon
 ```
 
-<details>
-  <summary>Sample output: Profile </summary>
-
-  ![](./images/profile_help.JPG)
-
-</details>
-
-<details>
-  <summary>Sample output: Profile Clean Build</summary>
-
-  ![](./images/profile_clean_build.JPG)
-
-</details>
-
-
-#### Gradle user home
+<a id="user_home"> </a>
+## Gradle user home [^](#toc)
  Specify gradle user home directory. Defaults to ~/.gradle
 ```text
 gradle --gradle-user-home
 ```
 
-
-#### Gradle offline mode
+<a id="offline_mode"> </a>
+## Gradle offline mode [^](#toc)
  Gradle will not use network
 ```text
 gradle --offline
 ```
 
-#### Build projects in parallel
+<a id="parallel_mode"> </a>
+## Build projects in parallel [^](#toc)
 
 ```text
 gradle --parallel
-```
-
-#### Continue task execution after a task failure
-
-```text
-gradle --continue
-```
-
-#### Do not use Gradle daemon
-
-```text
-gradle --no-daemon
 ```

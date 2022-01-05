@@ -4,7 +4,7 @@
 ## Table of contents
 
 1. [Contribution guidelines](#contri_guidelines)
-1. [Executing git on command line](#exec_cmd)
+1. [Executing git commands via command line](#exec_cmd)
 1. [Git directories](#git_direc)
 1. [How to execute](#how_to_exec)
 1. [Git help](#git_help)
@@ -38,7 +38,7 @@
 3. Raise pull request & merge.
 
 <a id="exec_cmd"></a>
-## Executing git on command line  [^](#toc)
+## Executing git commands via command line  [^](#toc)
 Commands below assume that git is installed / available + accessible on target system.
 
 <a id="git_direc"></a>
