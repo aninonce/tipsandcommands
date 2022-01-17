@@ -24,11 +24,11 @@ Windows and Linus keymap can also be found at [here](https://resources.jetbrains
 
 <a id="settings"></a>
 ### How to launch Settings [^](#toc)
-Intellij settings can be launched using `Ctrl + Shift + S` or going to `File -> Settings`. Intellij `Settings` is similar to Eclipse `Preferences`.
+Intellij settings can be launched using `Ctrl + Shift + S` or going to `File -> Settings`. Settings can also be accessed by going to `wheel icon (top right) -> Settings`. Intellij `Settings` is similar to Eclipse `Preferences`.
 
 <a id="project_settings"></a>
 ### Project structure / Project settings [^](#toc)
-Project structure / project settings can be launched by selecting the project and then using shortcut `Ctrl + Alt + Shift + s` or going to `File -> Project Structure`. This is similar to Eclipse project settings.
+Project structure / project settings can be launched by selecting the project and then using shortcut `Ctrl + Alt + Shift + s` or going to `File -> Project Structure`. Project structure can also be accessed by going to `wheel icon (top right) -> Project Structure`. This is similar to Eclipse project settings.
 
 <a id="plugins"></a>
 ### Plugins [^](#toc)
