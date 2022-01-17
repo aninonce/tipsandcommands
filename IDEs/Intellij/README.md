@@ -1,4 +1,4 @@
-# Maven commands
+# Intellij
 
 <a id="toc"></a>
 ## Table of contents

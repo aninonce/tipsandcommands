@@ -1,4 +1,4 @@
-# Maven commands
+# Eclipse
 
 <a id="toc"></a>
 ## Table of contents
