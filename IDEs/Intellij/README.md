@@ -5,8 +5,9 @@
 
 1. [Contribution guidelines](#contri_guidelines)
 1. [Keyboad shortcuts](#keyboard_shortcuts)
-1. [How to launch Preferences](#preferences)
-1. [Project properties](#properties)
+1. [How to launch Settings](#settings)
+1. [Project structure / Project settings](#project_settings)
+1. [Plugins](#plugins)
 
 <a id="contri_guidelines"></a>
 ## Contribution guidelines [^](#toc)
