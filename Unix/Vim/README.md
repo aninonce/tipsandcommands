@@ -79,6 +79,25 @@ Starting of line `0`, end of line `$`.
 Move forward by a word `w`, backward by a word `b`
 Move forward by a character `l`, backward by a char `h`, downward by a char `j`, upward by a char `k`
 
+Few shortcuts below
+
+        `j`   Down one real line
+        `gj`  Down one display line
+        `k`   Up one real line
+        `gk`  Up one display line
+        `0`   To first character of real line
+        `g0`  To first character of display line
+        `^`   To first nonblank character of real line
+        `g^`  To first nonblank character of display line
+        `$`   To end of real line
+        `g$`  To end of display line
+        `w`   Forward to start of next word
+        `b`   Backward to start of current/previous word
+        `e`   Forward to end of current/next word
+        `%`   Jump between opening and closing sets of parentheses
+        ``    Position before the last jump within current file
+        `.    Location of last change
+
 ```
 </details>
 
@@ -252,7 +271,7 @@ Excute command on content of file using external command
 <a id="working_with_multiple_files"></a>
 ### Working with multiple files [^](#toc)
 <details>
-<summary>Detail </summary>
+<summary>Details </summary>
 
 ```text
 Open multiple files at a time with vim using `vi <files>`.
@@ -272,8 +291,169 @@ Working with tabbed windows
                 Load new file in tab:   `:tabedit <file>`, close tab  `:tabclose`, close all tab excep the current one `:tabonly`
                 Navigate to a tab: {n}gt, where n is number
                 Move a tab to a position:   `:tabmove {N}`
-                Move a tab to a position:   `:tabmove {N}`
                 
 ```
 </details>
 
+<a id="see_changes"></a>
+### See changes (changelist) done in a file [^](#toc)
+<details>
+<summary>Details </summary>
+
+```text
+            `:changes`      \\ show list of changes done, use `g;` & `g,` to move forward / backward
+                
+```
+</details>
+
+<a id="using_marks"></a>
+### Using marks [^](#toc)
+<details>
+<summary>Details </summary>
+
+```text
+        `ma` 	    set mark `a` at current cursor location. Lowercase letters create marks that are local to a buffer, whereas uppercase letters create global marks (can be used to navigate between files). You can set up to twenty-six global marks
+        `'a` 	    jump to line of mark a (first non-blank character in line)
+        ``a` 	    jump to position (line and column) of mark a
+        `d'a` 	    delete from current line to line of mark a
+        `d`a` 	    delete from current cursor position to position of mark a
+        `c'a` 	    change text from current line to line of mark a
+        `y`a` 	    yank text to unnamed buffer from cursor to position of mark a
+        `:marks` 	list all the current marks 
+                
+```
+</details>
+
+<a id="working_with_macros"></a>
+### Working with macros [^](#toc)
+<details>
+<summary>Details </summary>
+
+Create macro using sequence of steps and repeat.
+```text
+    How to use:
+            The q key acts both as the “record” button and the “stop” button. Begin recording keystrokes by typing q{register}, giving the address of the register where to save the macro.
+            Inspect the content of register as
+    Inspect macro:
+            `:reg {register}`
+    How to apply:
+            Go to the line where you would like to apply macro and use 
+                `@{register}`  // apply the macro once
+                `[number]@{register}`   // apply macro n number of times
+    How to edit existing macro:
+            When you have a document open, press `Shift+G` to go to end of document and 
+            use `:put {register}`, this will paste the content of macro after the current line in doc.
+            Edit macro. To save the content of macro use command `"add`
+                
+```
+</details>
+
+<a id="search_replace_execute_global_commands"></a>
+### Search, replace & execute global comamnds [^](#toc)
+<details>
+<summary>Details </summary>
+
+```text
+Search:
+    set ignore case:
+            Set ignore case globally. `:set ignorecase`
+            `\c` causes the search pattern to ignore case, `\C` item forces case sensitivity.
+    python / perl like regex:
+            Use \v before pattern e.g.
+            /\v#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})     // Matches color pattern
+                                                        body { color: #3c3c3c; }
+                                                        a { color: #0000EE; }
+                                                        strong { color: #000; }
+            Different between normal regex (POSIX) vs using `/v` on vim:
+
+            #\([0-9a-fA-F]\{6}\|[0-9a-fA-F]\{3}\)   // normal
+            \v#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})      // equivalent of above using `\v`
+            :g/TODO/yank A      // search each line which have TODO and append the result to register `a`
+                                :reg a
+                                ❮ "a // TODO: Cache this regexp for certain depths.
+                                // TODO: No matching end code found - warn!
+Substitution:
+        :[range]s[ubstitute]/{pattern}/{string}/[flags]
+
+        :%s/<search pattern>/<replace text>/g    // Global edit:  E.g. :%s/\v'(([^']|'\w)+)'/“\1”/g  ,  `%` help with vertical axis, `g` helps with horizontal axis
+        :%s/<search pattern>/<replace text>     // First match, single line edit
+        :%s/content/copy/gc     // The c flag causes Vim to show us each match and ask “Replace with copy?”. Use `y` to perform the change or `n` to skip it.
+
+        E.gs.
+
+        :%s/\n/,        //  joins every line of a file by replacing newlines with commas
+        :%s//<C-r>0/g   //  use the content of register `0` for substitution. Similarly content of register can work for search pattern as well
+        /\v\<\/?h\zs\d     // The `\zs` allows to zoom in on part of the match. `h\zs\d` would match the letter h followed
+                            by any digit (e.g. h1, h2). The placement of \`zs` indicates that the h itself would be excluded from the match
+        Creating dictionary in vim:
+                            :let swapper={"up":"down","down":"up"}
+                            :echo swapper["up"]
+                            ❮ down
+                            :echo swapper["down"]
+                            ❮ up
+Execute global commands:
+        :g/{pattern}/[cmd]
+        :g/{pattern}/[range][cmd]
+```
+</details>
+
+
+<a id="autocompletion"></a>
+### Autocompletion [^](#toc)
+<details>
+<summary>Details </summary>
+
+Autocompletion can be triggered in insert mode.
+```text
+
+Commands:
+            <C-n> Generic keywords      // <C-n> : next, <C-p> : previous
+            <C-x><C-n> Current buffer keywords
+            <C-x><C-i> Included file keywords
+            <C-x><C-]> tags file keywords
+            <C-x><C-k> Dictionary lookup
+            <C-x><C-l> Whole line completion
+            <C-x><C-f> Filename completion
+            <C-x><C-o> Omni-completion
+```
+</details>
+
+<a id="spell_checker"></a>
+### Spell checker [^](#toc)
+<details>
+<summary>Details </summary>
+
+Find and correct spelling mistakes.
+```text
+
+Commands:
+            `:set spell`        // Highlight a word mispelled
+            `:set nospell`      // Disable spell check
+            `:set spelllang=en_us`  // Set up regional language for spell check
+            `]s`                // Jump to next spelling error
+            `[s`                // Jump to previous spelling error
+            `z=`                // Suggest corrections for current word
+            `1z=`               // Fix the word with suggestion
+            `zg`                // Add current word to spell file
+            `zw`                // Remove current word from spell file
+            `zug`               // Revert zg or zw command for current word
+```
+</details>
+
+<a id="ctags"></a>
+### Ctags [^](#toc)
+<details>
+<summary>Details </summary>
+
+ctags is an external program that scans through a codebase and generates an index of keywords. This allows us to navigate around a codebase by quickly jumping to definitions of functions and classes. Output from ctags can be used to generate a word list for autocompletion.
+```text
+
+Commands:
+            `Ctrl + ]`	        // Go to definition
+            `Ctrl + T`	        // Jump back from the definition
+            `Ctrl + W Ctrl + ]`	// Open the definition in a horizontal split
+            `:ts <tag_name>`	// List the tags that match <tag_name>
+            `:tn`	            // Jump to the next matching tag
+            `:tp`	            // Jump to the previous matching tag
+```
+</details>

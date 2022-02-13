@@ -1,14 +1,31 @@
 # Bashrc
 ### Use contents (full / partial) of this file in your .bashrc
 
-### Allow use of vim commands on command line
-set -o vi
+### When adding an item to history, delete itentical commands upstream
+export HISTCONTROL=erasedups
+
+### Save 10000 items in history
+export HISTSIZE=10000
+
+### Append history to ~\.bash_history when exiting shell
+shopt -s histappend
 
 export PS1="[\D{%H:%M}]\[\033[01;32m\]\u:\[\033[01;34m\]\W\[\033[00m\]\$ "
 ### Some other options for PS1
 ###### export PS1="[\t]\u \W\$ "
 ###### export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$"
 ###### export PS1="[\t]\[\033[01;32m\]\u:\[\033[01;34m\]\W\[\033[00m\]\$ "
+
+### Color codes
+black="\[\e[30m\]"
+red="\[\e[31m\]"
+green="\[\e[32m\]"
+yellow="\[\e[33m\]"
+blue="\[\e[34m\]"
+magenta="\[\e[35m\]"
+cyan="\[\e[36m\]"
+white="\[\e[37m\]"
+reset="\[\e[0m\]"
 
 ## Useful alias
 ### Move to the parent folder.
